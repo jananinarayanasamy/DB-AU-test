@@ -1,0 +1,52 @@
+<html>
+<head>
+    <!--
+    This is the library that provides websocket streaming pub/sub
+    The dev serverver is serving the html and javascript, but it also provides updating fx data on /fx/prices.
+     -->
+    <script src="stomp.js"></script>
+    <script src="sparkline.js"></script>
+</head>
+<body>
+
+<!-- This is a description of what you should do for this task.  You can remove it for your answer -->
+<section class="content">
+    <h1>Live Updating Sorted Table</h1>
+    <p></p>
+    <section id="stomp-status"></section>
+    <p> As per task i have completed and populoted below as sorted table with live update sparkline. </p>
+    <p>
+        <code>Regarding test case i did what i knew. 
+            I assure that i will learn quickly to write automation testcase.</code>
+    </p>
+    <p>Thanks for opportunity  that you have given me to explore new things.</p>
+    <p></p>
+    <section id="error-message"></section>
+</section>
+
+<!-- Code you write in index.js and anything it depends on will be bundled into bundle.js and
+     is included here -->
+
+<script src="../index.js"></script>
+<script src="bundle.js"></script>
+<script>
+ 
+ </script>   
+<div>
+    <table id="tableDisplayId">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>bestBid</th>
+                <th>bestAsk</th>
+                <th>openBid</th>
+                <th>openAsk</th>
+                <th>lastChangeAsk</th>
+                <th>lastChangeBid</th>
+                <th >Sparkline</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+</body>
+</html>
