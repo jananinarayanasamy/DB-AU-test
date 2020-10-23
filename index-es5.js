@@ -15,8 +15,8 @@ require('./site/style.css')
 */
 
 var myModule = require('./constants.js');
-var tableFunction = require('./es6/table-functions.js');
-var socketReceivedObject = require('./es6/data-formation.js');
+var socketReceivedObject = require('./object-formation.js');
+var gridFunction = require('./grid-functions.js');
 
 // if you want to use es6, you can do something like
 //     require('./es6/myEs6code')
@@ -27,7 +27,7 @@ global.DEBUG = false
 
 const url = "ws://localhost:8011/stomp"
 const client = Stomp.client(url)
-client.debug = function (msg) {
+client.debug = function(msg) {
   if (global.DEBUG) {
     console.info(msg)
   }
@@ -35,15 +35,15 @@ client.debug = function (msg) {
 
 function connectCallback() {
   document.getElementById('stomp-status').innerHTML = "Successfully connected to a stomp server."
-  /* 
-   ---Below line added by Janani---
-   ---For the purpose of Subscribe to a STOMP location.---
-  */
-  const subscription = client.subscribe("/fx/prices", subscriptionCallback);
-
+/* 
+ ---Below line added by Janani---
+ ---For the purpose of Subscribe to a STOMP location.---
+*/
+  var subscription = client.subscribe("/fx/prices", subscriptionCallback);
+ 
 }
 
-client.connect({}, connectCallback, function (error) {
+client.connect({}, connectCallback, function(error) {
   alert(error.headers.message)
 })
 
@@ -52,15 +52,12 @@ client.connect({}, connectCallback, function (error) {
  ---For the purpose of Subscribe CallBackFunction.---
 */
 
-var currencyData = [];
+var currencyData=[] ;
 function subscriptionCallback(res) {
   var responseObj = JSON.parse(res.body);
-  // Function to formating recevied Object //
-  currencyData = socketReceivedObject.dataFormation(currencyData, responseObj.name, responseObj);
-  // Add to sort well defined object // 
-  currencyData = currencyData.sort(function (a, b) { return b.lastChangeBid - a.lastChangeBid });
-  // function to delete all rows //
-  tableFunction.DeleteRows();
-  // function to generated rows // 
-  tableFunction.generateTable(currencyData);
-}
+  currencyData = socketReceivedObject.dataFormation(currencyData, responseObj.name,responseObj);
+  currencyData = currencyData.sort(function(a, b){return b.lastChangeBid - a.lastChangeBid});
+  gridFunction.DeleteRows();
+  let table = document.getElementById(myModule.TABLE_DISPLAY_COLNAME);
+  gridFunction.generateTable(table, currencyData); 
+ }
