@@ -4,18 +4,6 @@
   const {dataFormation, filterByTerm,sortByChangeBid, filterByTime, calculateMidprice} = require('../es6/data-formation.js');
 
   describe("Filter function", () => {
-    test("it should filter by a search term (link)", () => {
-      const input = [
-        { id: 1, url: "https://www.url1.dev" },
-        { id: 2, url: "https://www.url2.dev" },
-        { id: 3, url: "https://www.link3.dev" }
-      ];
-  
-      const output = [{ id: 3, url: "https://www.link3.dev" }];
-  
-      expect(filterByTerm(input, "link")).toEqual(output);
-    });
-
     test("Sort table", () => {
         const input = [
             {name: "gbpjpy", bestBid: "156.336674", bestAsk: "162.514956", openBid: "155.081092", openAsk: "161.498908", lastChangeAsk: "5.295630", lastChangeBid: "3.437916"},

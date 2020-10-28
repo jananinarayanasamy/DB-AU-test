@@ -2,7 +2,7 @@
 /**
 * Live received object functions definition mentioned here .
 **/
-var myModule = require('../constants.js');
+const myModule = require('../constants.js');
 
 const dataFormation = (completeData, name, receivedData) => {
  // findIndex to name is exist ot not. If exists object get update else push object
@@ -19,9 +19,9 @@ const dataFormation = (completeData, name, receivedData) => {
 
 // function to foemat the object element and calculate midprice 
 const updateObject = (receivedData, foundIndex, completeData) => {
-    var existArray = [];
-    var currentDate = new Date();
-    var currentTime = currentDate.getTime();
+    let existArray = [];
+    const currentDate = new Date();
+    const currentTime = currentDate.getTime();
     if (foundIndex != -1) {
         existArray = completeData[foundIndex][myModule.MIDPRICE_LABEL];
     }
@@ -47,19 +47,13 @@ const calculateMidprice = (bestAskRec,bestBidRec) => {
     return (Number(bestAskRec) + Number(bestBidRec)) / 2;
 }
 
-const filterByTerm = (inputArr, searchTerm) => {
-    return inputArr.filter(function(arrayElement) {
-      return arrayElement.url.match(searchTerm);
-    });
-  }
-
-  const filterByTime = (midPriceArray) => {
-    var currentDate = new Date();
-    var currentTime = currentDate.getTime();
+const filterByTime = (midPriceArray) => {
+    const currentDate = new Date();
+    const currentTime = currentDate.getTime();
     return midPriceArray.filter(itemTime => (currentTime - itemTime.dataTime) <= 30000);
   }
 
  const sortByChangeBid = (sortObject) =>{
      return sortObject.sort(function (a, b) { return b.lastChangeBid - a.lastChangeBid });
  } 
-module.exports = { dataFormation, filterByTerm, sortByChangeBid, filterByTime, calculateMidprice};
+module.exports = { dataFormation, sortByChangeBid, filterByTime, calculateMidprice};

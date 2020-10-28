@@ -1,9 +1,9 @@
 // improt constant variable file
-var myModule = require('../constants.js');
+const myModule = require('../constants.js');
 
 // function to delete all row before render
 const DeleteRows = () => {
-    var rowCount = document.getElementById(myModule.TABLE_ROW_COLNAME).rows.length;
+    const rowCount = document.getElementById(myModule.TABLE_ROW_COLNAME).rows.length;
     for (let i = rowCount - 1; i >= 0; i--) {
         document.getElementById(myModule.TABLE_ROW_COLNAME).deleteRow(i);
     }
@@ -12,7 +12,7 @@ const DeleteRows = () => {
 // function to build table row and draw sparkLine
 
 const generateTable = (tableData) => {
-
+    ///console.log(tableData);
     try{
         tableData.forEach(data => {
         // create data to pass sparkline //

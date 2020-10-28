@@ -14,9 +14,9 @@ require('./site/style.css')
  ---For the purpose of including files.---
 */
 
-var myModule = require('./constants.js');
-var tableFunction = require('./es6/table-functions.js');
-var socketReceivedObject = require('./es6/data-formation.js');
+const myModule = require('./constants.js');
+const tableFunction = require('./es6/table-functions.js');
+const socketReceivedObject = require('./es6/data-formation.js');
 
 // if you want to use es6, you can do something like
 //     require('./es6/myEs6code')
@@ -52,9 +52,9 @@ client.connect({}, connectCallback, function (error) {
  ---For the purpose of Subscribe CallBackFunction.---
 */
 
-var currencyData = [];
+let currencyData = [];
 const subscriptionCallback = (res) => {
-  var responseObj = JSON.parse(res.body);
+  const responseObj = JSON.parse(res.body);
   // Function to formating recevied Object //
   currencyData = socketReceivedObject.dataFormation(currencyData, responseObj.name, responseObj);
   // Add to sort well defined object // 
