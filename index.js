@@ -33,14 +33,14 @@ client.debug = function (msg) {
   }
 }
 
-function connectCallback() {
+const connectCallback = () => {
   document.getElementById('stomp-status').innerHTML = "Successfully connected to a stomp server."
   /* 
    ---Below line added by Janani---
    ---For the purpose of Subscribe to a STOMP location.---
   */
   const subscription = client.subscribe("/fx/prices", subscriptionCallback);
-
+ // console.log("subscription",subscription)
 }
 
 client.connect({}, connectCallback, function (error) {
@@ -53,14 +53,16 @@ client.connect({}, connectCallback, function (error) {
 */
 
 var currencyData = [];
-function subscriptionCallback(res) {
+const subscriptionCallback = (res) => {
   var responseObj = JSON.parse(res.body);
   // Function to formating recevied Object //
   currencyData = socketReceivedObject.dataFormation(currencyData, responseObj.name, responseObj);
   // Add to sort well defined object // 
-  currencyData = currencyData.sort(function (a, b) { return b.lastChangeBid - a.lastChangeBid });
+  currencyData = socketReceivedObject.sortByChangeBid(currencyData);
   // function to delete all rows //
   tableFunction.DeleteRows();
   // function to generated rows // 
   tableFunction.generateTable(currencyData);
 }
+
+module.exports = { subscriptionCallback, connectCallback };

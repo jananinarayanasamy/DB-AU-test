@@ -31,14 +31,35 @@ const updateObject = (receivedData, foundIndex, completeData) => {
     receivedData.lastChangeBid = receivedData.lastChangeBid.toFixed(6);
     receivedData.openAsk = receivedData.openAsk.toFixed(6);
     receivedData.openBid = receivedData.openBid.toFixed(6);
-    let newVal = (Number(receivedData.bestAsk) + Number(receivedData.bestBid)) / 2;
-    existArray.push({ "dataTime": currentTime, "dataMPrice": newVal });
+   // let newVal = (Number(receivedData.bestAsk) + Number(receivedData.bestBid)) / 2;
+   //calculate midprice
+   let newVal = calculateMidprice(receivedData.bestAsk,receivedData.bestBid);
+   existArray.push({ "dataTime": currentTime, "dataMPrice": newVal });
     // filter between 30 seconds data.
-    const filterPrice = existArray.filter(itemTime => (currentTime - itemTime.dataTime) <= 30000);
+    const filterPrice = filterByTime(existArray);
+   //const filterPrice = existArray.filter(itemTime => (currentTime - itemTime.dataTime) <= 30000);
     receivedData.midPrice = filterPrice;
 
     return receivedData;
 }
 
+const calculateMidprice = (bestAskRec,bestBidRec) => {
+    return (Number(bestAskRec) + Number(bestBidRec)) / 2;
+}
 
-module.exports = { dataFormation };
+const filterByTerm = (inputArr, searchTerm) => {
+    return inputArr.filter(function(arrayElement) {
+      return arrayElement.url.match(searchTerm);
+    });
+  }
+
+  const filterByTime = (midPriceArray) => {
+    var currentDate = new Date();
+    var currentTime = currentDate.getTime();
+    return midPriceArray.filter(itemTime => (currentTime - itemTime.dataTime) <= 30000);
+  }
+
+ const sortByChangeBid = (sortObject) =>{
+     return sortObject.sort(function (a, b) { return b.lastChangeBid - a.lastChangeBid });
+ } 
+module.exports = { dataFormation, filterByTerm, sortByChangeBid, filterByTime, calculateMidprice};
